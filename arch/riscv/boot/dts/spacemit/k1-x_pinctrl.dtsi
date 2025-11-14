@@ -1188,5 +1188,12 @@
 			K1X_PADCONF(PRI_TDO, MUX_MODE0, (EDGE_NONE | PULL_UP | PAD_1V8_DS2))
 		>;
 	};
+
+	pinctrl_rcpu: pinctrl_rcpu_grp {
+		pinctrl-single,pins = <
+			K1X_PADCONF(GPIO_47, MUX_MODE1, (EDGE_NONE | PULL_UP | PAD_3V_DS4))	/* r_uart0_tx 1100 0100 0100 0000 0xc440 */
+			K1X_PADCONF(GPIO_48, MUX_MODE1, (EDGE_NONE | PULL_UP | PAD_3V_DS4))	/* r_uart0_rx */
+		>;
+	};
 };
 

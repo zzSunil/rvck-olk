@@ -303,4 +303,22 @@ config TH1520_MBOX
 	  Mailbox implementation for Xuantie TH1520 SoCs.
 	  Say Y here if you want to have this support. If unsure say N.
 
+config SPACEMIT_MAILBOX
+	tristate "Spacemit Message Box"
+	depends on SOC_SPACEMIT
+	help
+		Mailbox implementation for the hardware message box present in
+		various Spacemit SoCs. This mailbox is used for communication
+		between the application CPUs and the power management coprocessor.
+
+if SPACEMIT_MAILBOX
+config K1X_MAILBOX
+	tristate "Spacemit K1x Message Box"
+	depends on SOC_SPACEMIT
+	help
+		Mailbox implementation for the hardware message box present in
+		various Spacemit SoCs. This mailbox is used for communication
+		between the application CPUs and the power management coprocessor.
+endif
+
 endif

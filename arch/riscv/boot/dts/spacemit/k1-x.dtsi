@@ -23,6 +23,8 @@
 		serial6 = &uart7;
 		serial7 = &uart8;
 		serial8 = &uart9;
+		serial9 = "/soc/r_uart0@c0881000";
+		serial10 = "/soc/r_uart1@c088d000";
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 		mmc2 = &sdhci2;
@@ -406,6 +408,33 @@
 		};
 	};
 
+	reserved-memory {
+		#address-cells = <0x02>;
+		#size-cells = <0x02>;
+		ranges;
+
+		client_os_reserved@30500000 {
+			reg = <0x00 0x30500000 0x00 0x100000>;
+			no-map;
+			phandle = <0x32>;
+		};
+
+		client_os-dma-memory@30600000 {
+			compatible = "shared-dma-pool";
+			reg = <0x00 0x30600000 0x00 0x100000>;
+			no-map;
+			phandle = <0x31>;
+		};
+	};
+
+	mcs: mcs-remoteproc {
+		compatible = "oe,mcs_remoteproc";
+		memory-region = <0x31 0x32>;
+		resets = <&reset RESET_AUDIO_SYS>;
+		reset-names = "core_reset";
+		status = "okay";
+	};
+
 	soc: soc {
 		compatible = "simple-bus";
 		#address-cells = <2>;
@@ -679,6 +708,22 @@
 			clock-names = "func", "gate";
 			resets = <&reset RESET_UART9>;
 			status = "disabled";
+		};
+
+		mailbox0: mailbox@d4013400 {
+			compatible = "spacemit,k1-x-mailbox";
+			reg = <0x00 0xd4013400 0x00 0x100>;
+			interrupt-parent = <0x1a>;
+			interrupts = <0x34>;
+			#mbox-cells = <0x01>;
+			clocks = <&ccu CLK_IPC_AP2AUD>;
+			clock-names = "core";
+			resets = <&reset RESET_IPC_AP2AUD>;
+			reset-names = "core_reset";
+			status = "okay";
+			phandle = <0x50>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_rcpu>;
 		};
 
 		i2c0: i2c@d4010800 {
